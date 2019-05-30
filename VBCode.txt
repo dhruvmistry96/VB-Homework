@@ -1,0 +1,48 @@
+Sub Dosomething()
+    Dim xSh As Worksheet
+    Application.ScreenUpdating = False
+    For Each xSh In Worksheets
+        xSh.Select
+        Call Stocks
+    Next
+    Application.ScreenUpdating = True
+End Sub
+
+Sub Stocks()
+    Dim Stock_Name As String
+    Dim Stock_Total As Double
+    Stock_Total = 0
+    
+    Dim Summary_Table_Row As Integer
+    Summary_Table_Row = 2
+    
+    'Loop through all Stocks
+    For i = 2 To 797711
+    
+        If Cells(i + 1, 1) <> Cells(i, 1).Value Then
+            Stock_Name = Cells(i, 1).Value
+            Stock_Total = Stock_Total + Cells(i, 7).Value
+            
+            'Print the Unique Stock Name & its Total
+            Range("I" & Summary_Table_Row).Value = Stock_Name
+            Range("J" & Summary_Table_Row).Value = Stock_Total
+            
+            Summary_Table_Row = Summary_Table_Row + 1
+            
+            'Resetting the Stock Total
+            Stock_Total = 0
+        
+        Else
+        
+            Stock_Total = Stock_Total + Cells(i, 7).Value
+            
+        End If
+    Next i
+    
+    Range("I1") = "Ticker"
+    Range("J1") = "Totals"
+    
+
+End Sub
+
+
